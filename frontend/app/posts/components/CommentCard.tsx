@@ -5,7 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Mail, Edit2, Trash2, Save, X } from "lucide-react";
-import type { Comment, CurrentUser } from "../utils/types";
+import type { Comment } from "../utils/types";
+import { CurrentUser } from "@/app/commons/types";
 
 export default function CommentCard({
   comment,

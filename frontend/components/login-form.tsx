@@ -54,7 +54,7 @@ export function LoginForm({
       
       //  Push to the fallbackUrl or the posts page
       router.push(fallbackUrl);
-    } catch (err) {
+    } catch (_) {
       setError("Failed to set login cookie");
     }
   };

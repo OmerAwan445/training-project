@@ -1,25 +1,16 @@
 "use client";
-import React from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { User } from "lucide-react";
-import { Plus } from "lucide-react";
-import type { CurrentUser } from "../utils/types";
 import useAuth from "@/app/hooks/useAuth";
+import { usePosts } from "@/app/hooks/usePosts";
+import { Button } from "@/components/ui/button";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Plus, User } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function PageHeader({
-  currentUser,
-  creating,
-  setCreating,
-}: {
-  currentUser: CurrentUser;
-  creating: boolean;
-  setCreating: (creating: boolean) => void;
-}) {
+export default function PageHeader() {
   const router = useRouter();
-  const { isAuthorized } = useAuth();
+  const { isAuthorized, currentUser } = useAuth();
+  const { creating, setCreating } = usePosts();
 
 
   return (

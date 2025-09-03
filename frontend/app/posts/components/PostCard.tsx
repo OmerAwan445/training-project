@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { User, Edit2, Trash2, Save, X } from "lucide-react";
 import CommentsSection from "./CommentsSection";
-import type { Post, Comment, CurrentUser } from "../utils/types";
+import type { Post, Comment } from "../utils/types";
+import { CurrentUser } from "@/app/commons/types";
 
 export default function PostCard({
   post,

@@ -6,15 +6,12 @@ import { useEffect, useState } from "react";
 import { Comment, CommentsMap, PostsContextType } from "../utils/types";
 
 // Provider component
-export function PostsProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function PostsProvider({ children }: { children: React.ReactNode }) {
   const { currentUser } = useAuth();
   const [commentsMap, setCommentsMap] = useState<CommentsMap>({});
   const [commentsLoading, setCommentsLoading] = useState(true);
   const [commentsError, setCommentsError] = useState<string | null>(null);
+  const [creating, setCreating] = useState(false);
 
   // Load all comments on mount
   useEffect(() => {
@@ -34,7 +31,7 @@ export function PostsProvider({
       if (!postsRes.ok) throw new Error("Failed to fetch posts for comments");
 
       const posts = await postsRes.json();
-      const postIds = posts.slice(0, 30).map((p: any) => p.id);
+      const postIds = posts.slice(0, 30).map((p: { id: number }) => p.id);
 
       // Fetch comments for all posts in parallel
       const commentsPromises = postIds.map(async (postId: number) => {
@@ -47,7 +44,7 @@ export function PostsProvider({
           const comments = await res.json();
           return {
             postId,
-            comments: comments.map((c: any) => ({
+            comments: comments.map((c: Comment) => ({
               id: c.id,
               postId: c.postId,
               name: c.name,
@@ -92,7 +89,7 @@ export function PostsProvider({
         throw new Error(`Failed to refresh comments for post ${postId}`);
 
       const comments = await res.json();
-      const formattedComments = comments.map((c: any) => ({
+      const formattedComments = comments.map((c: Comment) => ({
         id: c.id,
         postId: c.postId,
         name: c.name,
@@ -119,7 +116,7 @@ export function PostsProvider({
 
     if (!body.trim()) return;
 
-  const newComment: Comment = {
+    const newComment: Comment = {
       id: Date.now(), // Temporary ID
       postId,
       name: currentUser.name,
@@ -170,6 +167,8 @@ export function PostsProvider({
   // Context value
   const contextValue: PostsContextType = {
     commentsMap,
+    creating,
+    setCreating,
     setCommentsMap,
     commentsLoading,
     commentsError,

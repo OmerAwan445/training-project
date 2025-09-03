@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { MessageCircle, Plus } from "lucide-react";
 import CommentCard from "./CommentCard";
-import type { Comment, CurrentUser } from "../utils/types";
+import type { Comment } from "../utils/types";
+import { CurrentUser } from "@/app/commons/types";
 
 export default function CommentsSection({
   postId,

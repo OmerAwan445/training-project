@@ -29,7 +29,6 @@ export type Comment = {
   owner?: { name: string; email: string } | null;
 };
 
-export type CurrentUser = { name: string; email: string } | null;
 
 // Types for the context
 export type CommentsMap = Record<number, Comment[]>;
@@ -39,6 +38,8 @@ export type PostsContextType = {
   commentsMap: CommentsMap;
   setCommentsMap: React.Dispatch<React.SetStateAction<CommentsMap>>;
   commentsLoading: boolean;
+  creating: boolean;
+  setCreating: React.Dispatch<React.SetStateAction<boolean>>;
   commentsError: string | null;
 
   // Comment actions
