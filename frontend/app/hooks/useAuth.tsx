@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import { CurrentUser } from "../posts/utils/types";
 import { getCookie } from "../server actions/cookies-actions";
 

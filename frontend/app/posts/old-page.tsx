@@ -8,20 +8,13 @@ import LoadingState from "./components/LoadingState";
 import PageHeader from "./components/PageHeader";
 import PostCard from "./components/PostCard";
 import type { ApiComment, ApiPost, Comment, Post } from "./utils/types";
-import { usePosts } from "@/app/hooks/usePosts";
 
 export default function PostsPage() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [commentsMap, setCommentsMap] = useState<Record<number, Comment[]>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const {
-    getCommentsForPost,
-    setCommentsMap,
-    addComment,
-    editComment,
-    deleteComment,
-  } = usePosts();
   const [creating, setCreating] = useState(false);
   const [newTitle, setNewTitle] = useState("");
   const [newBody, setNewBody] = useState("");
@@ -122,6 +115,38 @@ export default function PostsPage() {
     });
   };
 
+  const addComment = (postId: number, body: string) => {
+    if (!isAuthorized()) return alert("Please login to comment");
+    if (!body.trim()) return;
+    const id = Date.now();
+    const c: Comment = {
+      id,
+      postId,
+      name: currentUser!.name,
+      email: currentUser!.email,
+      body,
+      owner: currentUser,
+    };
+    setCommentsMap((m) => ({ ...m, [postId]: [...(m[postId] || []), c] }));
+  };
+
+  const editComment = (postId: number, commentId: number, newBody: string) => {
+    setCommentsMap((m) => ({
+      ...m,
+      [postId]: (m[postId] || []).map((c) =>
+        c.id === commentId ? { ...c, body: newBody } : c
+      ),
+    }));
+  };
+
+  const deleteComment = (postId: number, commentId: number) => {
+    if (!confirm("Delete this comment?")) return;
+    setCommentsMap((m) => ({
+      ...m,
+      [postId]: (m[postId] || []).filter((c) => c.id !== commentId),
+    }));
+  };
+
   if (loading) return <LoadingState />;
   if (error) return <ErrorState error={error} />;
 
@@ -150,7 +175,7 @@ export default function PostsPage() {
             <PostCard
               key={post.id}
               post={post}
-              comments={getCommentsForPost(post.id) || []}
+              comments={commentsMap[post.id] || []}
               currentUser={currentUser}
               editingPostId={editingPostId}
               editingTitle={editingTitle}

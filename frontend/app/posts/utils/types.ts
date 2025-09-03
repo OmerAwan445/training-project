@@ -30,3 +30,24 @@ export type Comment = {
 };
 
 export type CurrentUser = { name: string; email: string } | null;
+
+// Types for the context
+export type CommentsMap = Record<number, Comment[]>;
+
+export type PostsContextType = {
+  // Comments data
+  commentsMap: CommentsMap;
+  setCommentsMap: React.Dispatch<React.SetStateAction<CommentsMap>>;
+  commentsLoading: boolean;
+  commentsError: string | null;
+
+  // Comment actions
+  addComment: (postId: number, body: string) => void;
+  editComment: (postId: number, commentId: number, newBody: string) => void;
+  deleteComment: (postId: number, commentId: number) => void;
+
+  // Utility functions
+  getCommentsForPost: (postId: number) => Comment[];
+  getCommentCount: (postId: number) => number;
+  refreshCommentsForPost: (postId: number) => Promise<void>;
+};

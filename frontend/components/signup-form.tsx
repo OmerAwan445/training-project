@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { UserStore } from "@/commons/UserStore";
+import { UserStore } from "@/app/commons/UserStore";
 import { useRouter } from "next/navigation";
 
 function SignupForm() {
