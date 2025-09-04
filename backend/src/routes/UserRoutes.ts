@@ -1,16 +1,13 @@
 // ** Add UserRouter ** //
 
-import Paths from "@src/common/constants/Paths";
-import { Router } from "express";
-import UserControllers from "../controllers/UserControllers";
+import Paths from '@src/common/constants/Paths';
+import UserController from '@src/controllers/UserController';
+import { Router } from 'express';
 
 // Init router
 const userRouter = Router();
 
 // Get all users
-userRouter.get(Paths.Users.Get, UserControllers.getAll);
-userRouter.post(Paths.Users.Add, UserControllers.add);
-userRouter.put(Paths.Users.Update, UserControllers.update);
-userRouter.delete(Paths.Users.Delete, UserControllers.delete);
+userRouter.get(Paths.Users.Get,  UserController.getUserProfile);
 
 export default userRouter;

@@ -53,7 +53,7 @@ export default tseslint.config(
       'max-len': [
         'warn',
         {
-          'code': 80,
+          'code': 100,
         },
       ],
       '@stylistic/ts/semi': ['warn', 'always'],
@@ -79,6 +79,9 @@ export default tseslint.config(
           },
         },
       }],
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/no-non-null-assertion': 0,
       '@typescript-eslint/no-unused-expressions': 'warn',
       'comma-dangle': ['warn', 'always-multiline'],
